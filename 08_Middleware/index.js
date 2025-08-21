@@ -31,6 +31,8 @@ app.get("/users", (req, res) => {
 
 // REST API
 app.get("/api/users", (req, res) => {
+  res.setHeader("X-MyName", "Dipesh SHrestha");
+  // Always use X in perfix for custom header
   return res.json(users);
 });
 
@@ -46,7 +48,8 @@ app
     const id = Number(req.params.id);
     const body = req.body;
     const userIndex = users.findIndex((user) => user.id === id);
-    if (userIndex === -1) return res.json({ status: "404 not found" });
+    if (userIndex === -1)
+      return res.status(404).json({ status: "404 not found" });
 
     users[userIndex] = { ...users[userIndex], ...body };
 
@@ -54,7 +57,9 @@ app
       if (err) {
         return res.status(500).json({ status: "Error saving data" });
       }
-      return res.json({ status: "User updated", user: users[userIndex] });
+      return res
+        .status(201)
+        .json({ status: "User updated", user: users[userIndex] });
     });
   })
   .delete((req, res) => {
@@ -63,7 +68,7 @@ app
 
     users.splice(userIndex, 1);
     fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, data) => {
-      return res.json({ status: "200 ok" });
+      return res.status(204).json({ status: "204 - No content" });
     });
   });
 
