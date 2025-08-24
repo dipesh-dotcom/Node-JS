@@ -16,12 +16,11 @@ const handleGenerateShortUrl = async (req, res) => {
     redirectURL: body.url,
     visitHistory: [],
   });
-  return res.status(201).json({ id: shortId });
+  return res.render("home", { id: shortId });
 };
 
 const handleGetHistory = async (req, res) => {
   const shortId = req.params.shortId;
-  console.log(shortId);
 
   const result = await URL.findOne({ shortId });
 
