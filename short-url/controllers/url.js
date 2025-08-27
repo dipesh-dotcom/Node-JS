@@ -16,7 +16,7 @@ const handleGenerateShortUrl = async (req, res) => {
     redirectURL: body.url,
     visitHistory: [],
   });
-  return res.render("home", { id: shortId });
+  res.render("home", { id: shortId });
 };
 
 const handleGetHistory = async (req, res) => {
